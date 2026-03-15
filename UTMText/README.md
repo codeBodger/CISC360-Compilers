@@ -21,6 +21,23 @@
 
 ## Subroutines
 
+- Each subroutine has an underlined label, which is used to 'call' it elsewhere
+- When a subroutine is referenced (i.e. 'called'), it is as though it were a
+  macro: the transition(s) in should simply be directed to (a copy of) the
+  subroutine's start state, while the transition out should be directed from the
+  'done' state.
+- When a subroutine is called, it may have an epsilon transition leaving it.  As
+  this is not a valid transition, it should be resolved in compilation by
+  joining the resulting states on either side of the epsilon transition.  Note
+  that no state should have both an epsilon transition and any other transitions
+  out of it.
+- True end-states such as 'reject' or 'accept' in subroutines should simply be
+  treated as end-states: in compilation, all 'reject' states can be combined
+  into one; the same with all 'accept's.
+- The additional feaux end-states 'no' and 'yes' should act much like 'done',
+  but allowing for multiple epsilon transitions out of a subroutine, each
+  labelled with the feaux end-state they should lead out of after compilation.
+
 ## Alpha/Beta and relabelling shorthands
 
 
