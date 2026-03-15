@@ -1,5 +1,8 @@
 # Handwritten notation
 
+I've probably missed some things and made some mistakes: please let me know if
+you have any questions.
+
 ## Simple-ish shorthands
 
 - If a state does not have a transition leaving it on a given tape symbol,
