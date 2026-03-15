@@ -40,5 +40,22 @@
 
 ## Alpha/Beta and relabelling shorthands
 
+- Lower-case alpha and beta match only ever '0' or '1'.
+- They can be concatenated with eachother or with other symbols to match the
+  double tape symbols shown in capital gamma at the top of page 1.
+  - When concatenated in this way, alpha always matches the first character and
+    beta always matches the second character, in order to avoid ambiguity.
+- As with gamma and sigma transitions, if an alpha/beta transition writes one of
+  these, it is the same as the one it read.
+- Alpha and beta are sometimes used in the states they come from or go to.  When
+  this is done, the state can be thought of as being multiple states, named with
+  the alpha/beta referenced replaced with either '0' or '1'.
+- States that reference these can also *relabel* the alpha or beta.  This is
+  indicated with an arrow, and allows a transition *out* of the state to both
+  read *and write* dynamic, but different, values (i.e. writing depending on
+  what they read going into them).
+- Alpha and beta can be concatenated with sigma, as well: this works as you
+  likely expect.
+
 
 # YAML/text notation
