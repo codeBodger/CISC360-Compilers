@@ -62,3 +62,51 @@ you have any questions.
 
 
 # YAML/text notation
+
+As an example:
+```yaml
+start state: S
+table:
+  S:
+    # on '[', change to state 'a_state', rewrite, and move right
+    '[': [a_state, R]
+    # fail on all else
+  a_state:
+    '0': [R] # on '0', don't change state, rewrite, and move right
+    '1': ['0', R] # on '1', don't change state, rewrite, and move right
+    gamma: [another_state, R] # change to another_state, rewrite, and move right
+  another_state:
+    # on '0', change to anonymous state, rewrite, and move right
+    # in anonymous state, on anything, change to state_4, rewrite, and move left
+    '0': [{gamma: [state_4, L]}, R]
+  state_4:
+    # on alpha_beta, change to "seen alpha->alpha'", rewrite, and move left
+    alpha_beta: ["seen alpha->alpha'", L]
+  "seen alpha->alpha'":
+    # on alpha_beta, change to move, write "alpha'_beta", i.e. the alpha from
+    # before and the beta from just now (see 'Alpha/Beta and relabelling
+    # shorthands' above), and move right
+    alpha_beta: [move, "alpha'_beta", R]
+  move:
+    # on '0', enter a_subroutine, rewrite, and move left
+    # upon exiting the subroutine, epsilon transition to state_7
+    '0': [a_subroutine, L, {epsilon: state_7}]
+  state_7:
+    # on '0', enter another_subroutine, rewrite, and move left
+    # upon exiting the subroutine, if ended in state 'no', epsilon transition to
+    # state 8, if ended in state 'yes', epsilon transition to state_9
+    '0': [another_subroutine, L, {'no epsilon': state_8,
+                                  'yes epsilon': state_9}]
+    # on '1', enter subroutine_3, follow typical transitions from 'done', as
+    # indicated (I guess it looks kind of like the anonymous state)
+    '1': [subroutine_3, L, {sigma: [state_8, L], '[': [state_9: R]}]
+```
+
+YAML is a bit odd: it's basically prettier JSON.  Hopefully you can easilly-ish
+see what's happening above, though.  The most important thing is probably that
+everything is automatically converted into a string, unless it can be turned
+into something else, like `1`, `-32`, or `false`, or it is part of other syntax,
+like `[`, `-`, or `?`.
+
+If you have any other ideas, we can totally discuss, this is just what I came up
+with Sunday evening.
