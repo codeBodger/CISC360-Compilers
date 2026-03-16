@@ -102,6 +102,61 @@ table:
     '1': [subroutine_3, L, {sigma: [state_8, L], '[': [state_9: R]}]
 ```
 
+Or maybe better:
+```yaml
+start state: S
+table:
+  # same as above until here
+  move:
+    # on '0', enter a_subroutine, rewrite, and move left
+    # upon exiting the subroutine, transition to state_7, implicitly on epsilon
+    '0': [[a_subroutine, state_7], L]
+    # or equivalently:
+    '0': [[a_subroutine: {epsilon: state_7}], L]
+  state_7:
+    # on '0', enter another_subroutine, rewrite, and move left
+    # upon exiting the subroutine, if ended in state 'no', epsilon transition to
+    # state_8, if ended in state 'yes', epsilon transition to state_9
+    '0':
+      - [another_subroutine: {'no epsilon': state_8, 'yes epsilon': state_9}]
+      - L
+    # on '1', enter subroutine_3, follow typical transitions from 'done', as
+    # indicated
+    '1': [[subroutine_3: {sigma: [state_8, L], '[': [state_9: R]}], L]
+    # or if you'd prefer to think of it as an implicit epsilon transition to an
+    # anonymous state:
+    '1': [[subroutine_3, {sigma: [state_8, L], '[': [state_9: R]}], L]
+  # The above rely on an idea of a pseudo-state or 'label' being for a list of
+  # subroutines.  Below, state_8 is really an endless loop of subroutines with
+  # epsilon transitions between them.  At the end, there's an epsilon transition
+  # to state_8 itself, which really just goes to its first subroutine
+  state_8:
+    - subroutine_4
+    - subroutine_5
+    - subroutine_6
+    - subroutine_7
+    - state_8
+  # Here, state_9 is similar to state_8, but the final subroutine (subroutine_7)
+  # has explicit transitions out of it.
+  state_9:
+    - subroutine_4
+    - subroutine_5
+    - subroutine_6
+    - subroutine_7:
+        sigma: [state_7, L]
+        '[': [failure, R]
+        gamma: [state_8, L]
+  # For identical effect, an anonymous state could be implicitly epsilonned to:
+ state_9:
+    - subroutine_4
+    - subroutine_5
+    - subroutine_6
+    - subroutine_7
+    - sigma: [state_7, L]
+      '[': [failure, R]
+      gamma: [state_8, L]
+```
+
 YAML is a bit odd: it's basically prettier JSON.  Hopefully you can easilly-ish
 see what's happening above, though.  The most important thing is probably that
 everything is automatically converted into a string, unless it can be turned
