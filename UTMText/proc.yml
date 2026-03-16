@@ -1,0 +1,14 @@
+start state: S
+table:
+  S:
+    - 'to left'
+    - 'check accept'
+    - 'check reject'
+    - 'find trans'
+    - 'delete dub'
+    - "dubify q'1gamma'1i"
+    - 'to H'
+    - "write gamma'"
+    - 'do i; del 1i'
+    - 'read gamma'
+    - S
