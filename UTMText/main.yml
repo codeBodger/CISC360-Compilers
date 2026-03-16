@@ -1,0 +1,7 @@
+alphabet: ['1','0','#']
+tape symbols: ['1','0','#','00','01','10','11','[',' ','#0','#1',' 1',' 0','H','H1','H0']
+left: '['
+blank: ' '
+start state: [init, {epsilon: [proc]}]
+reject: reject
+accept: accept
