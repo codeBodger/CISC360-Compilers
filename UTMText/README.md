@@ -65,6 +65,7 @@ you have any questions.
 
 As an example:
 ```yaml
+formalism: original
 start state: S
 table:
   S:
@@ -104,6 +105,7 @@ table:
 
 Or maybe better:
 ```yaml
+formalism: nesting minimising
 start state: S
 table:
   # same as above until here
@@ -147,7 +149,7 @@ table:
         '[': [failure, R]
         gamma: [state_8, L]
   # For identical effect, an anonymous state could be implicitly epsilonned to:
- state_9:
+  state_9:
     - subroutine_4
     - subroutine_5
     - subroutine_6
