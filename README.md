@@ -11,5 +11,5 @@
 - [ ] Additional informational descriptions
   - [ ] of the shorthand formalisms in the UTM PDF
   - [ ] of the shorthand formalisms of ShortRepr
-  - [ ] of the encoding described by Dr. Keffer, nearly exactly transcribed from
-    his digital handwritten notes
+  - [x] of the encoding described by Dr. Keffer, nearly exactly transcribed from
+    his digital handwritten notes (see: `Keffer.md`)
