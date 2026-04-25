@@ -1,15 +1,19 @@
 formalism: nesting minimising
-start state: S
+start state: proc
+# proc — top-level simulation loop. Source: UTM.pdf p.2 top.
+# 271 states composed from its called subroutines.
+# Chain of ε-connected subroutines. `ready` is a pure ε-hop in the
+# diagram; it folds into this chain as the implicit loop-back edge.
+# Filenames: dubify_qpgpi.yml, write_gp.yml, do_i_del_1i.yml
 table:
-  S:
-    - 'to left'
-    - 'check accept'
-    - 'check reject'
-    - 'find trans'
-    - 'delete dub'
-    - "dubify q'1gamma'1i"
-    - 'to H'
-    - "write gamma'"
-    - 'do i; del 1i'
-    - 'read gamma'
-    - S
+  proc:
+    - to left
+    - check accept
+    - check reject
+    - find trans
+    - delete dub
+    - "dubify q'γ'i"
+    - to H
+    - "write γ'"
+    - "do i; del 1i"
+    - proc                  # loop back via the `ready` ε-hop

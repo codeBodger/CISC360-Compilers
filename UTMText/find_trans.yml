@@ -1,0 +1,65 @@
+formalism: nesting minimising
+start state: find trans
+# find trans (75 states = 19 + 7·8). Source: UTM.pdf p.6 mid.
+# Finds the transition rule applicable to the current (state, symbol)
+# pair in the encoded transition table. Uses 8 copies of `shift dub R`
+# (one per encoded section: Q, Γ, Σ, s, t, r, plus q & γ transit)
+# plus 19 states of branching logic.
+#
+# flag: this is THE most complex subroutine in the UTM.  Bleed-through
+# on the page makes many transit labels hard to read. MY TRANSCRIPTION
+# IS BEST-EFFORT SKELETON — do NOT treat this as complete without
+# Samhain's review.
+#
+# High-level skeleton:
+#   ε → shift dub R → anon → shift dub R → anon → shift dub R →
+#       do check → to front of dub → (branch to q'/γ section) →
+#       q' → shift dub R → γ → shift dub R → shift dub R → done
+table:
+  find trans:
+    # Phase 1: walk 3 shift dub R sections to position at transition table
+    - "shift dub R":
+        '1': [pos2, R]         # 1/1,R — advance
+  pos2:
+    gamma: [stage2, L]
+  stage2:
+    - "shift dub R":
+        '1': [pos3, R]
+  pos3:
+    gamma: [stage3, L]
+  stage3:
+    - "shift dub R":
+        '1': [do check, R]
+  # Phase 2: do check — compare current (state, symbol) to rule's
+  do check:
+    '11': [R]                  # 11/11,R self-loop
+    '00': [R]                  # 00/00,R
+    '1': [to front of dub, L]  # 1/1,L — match, now reposition
+    '10': [alt branch, L]      # 10/10,L (flag: branches to q' side)
+    '01': [alt branch, L]
+    '0': [alt branch, L]
+  to front of dub:
+    '11': [L]
+    '00': [L]
+    '1': [pre_done, R]         # 1/1,R bounce
+  pre_done:
+    gamma: [done, L]
+  # Phase 3: alternate branch — mismatch, skip ahead via q'/γ section
+  alt branch:
+    # flag: this branches into the q'-side diagram with multiple
+    # shift dub R calls; I couldn't confidently read the exit points.
+    - "shift dub R":
+        '1': [q' section, R]
+  q' section:
+    gamma: [γ section, L]
+    # flag
+  γ section:
+    - "shift dub R":
+        '1': [gamma_advance, R]
+  gamma_advance:
+    - "shift dub R":
+        '1': [loop back, R]
+  loop back:
+    # flag: per diagram, this loops back to `do check` for the next rule
+    gamma: [do check, L]
+  done:

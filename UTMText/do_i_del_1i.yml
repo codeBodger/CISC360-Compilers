@@ -1,0 +1,52 @@
+formalism: nesting minimising
+start state: to del 1
+# do i; del 1i (76 states = 12 + 62 + 4 - 2). Source: UTM.pdf p.3 mid.
+# Advances the simulated TM's "instruction pointer" i by incrementing
+# 1^i unary. Uses `find and write ⊔` (62 states) and `to dub start
+# from R` (4 states) as subroutines.
+#
+# flag: this is one of the largest and densest diagrams. I can see the
+# high-level skeleton but many transit labels are hard to verify under
+# the bleed-through from the back of the page. Samhain, this one
+# especially needs your review.
+#
+# Structure I extracted:
+#   to del 1 → del 1 → do i → flip w/1 → to next → end? → (loop) → done
+#                    ↓ (10/1,L; ⊔0/⊔,L)
+#                    alternate branch → to next → end? → flip w/0 → loop
+# All the flip-w/1 and flip-w/0 transitions use α/β shorthand; the
+# compiler will expand them.
+table:
+  to del 1:
+    gamma: [del 1, L]           # γ/γ,L
+  del 1:
+    'H1': [do i, 'H', R]        # H1/H,R — delete the 1 after H
+    # flag: other transitions unclear
+  do i:
+    '11': [flip w1, 'H', L]     # 11/H,L (flag: label guessed)
+    '10': [to next, '1', L]     # 10/1,L
+    '⊔0': [to next, '⊔', L]     # ⊔0/⊔,L
+    # flag: more transitions unclear
+  flip w1:
+    'H': [to next, '1', R]      # H/1,R
+    '0': [flip w0, 'H', L]      # 0/H,L (flag)
+  flip w0:
+    '1': [to next, '0', R]      # (flag)
+    'Hβ': [to next_alt, '1β', L]
+  to next:
+    'H': ['end?', 'H', R]       # H/H,R
+    # other transitions unclear
+  to next_alt:
+    'Hβ': [end_alt, 'Hβ', L]
+  end?:
+    '1': ["to dub start from R", L]  # 1/1,L → call subroutine → done
+    '0': [flip w0_branch, 'H', L]    # 0/H,L
+    # flag
+  end_alt:
+    '0β': [flip w0_branch, 'Hβ', R]
+    '1β': ["to dub start from R", L]
+  flip w0_branch:
+    '1': [to next, '0', R]      # from the lower loop
+  # to dub start from R called via list form to exit to done
+  # (implicit in the transitions above using ["to dub start from R", L])
+  done:

@@ -1,0 +1,14 @@
+formalism: nesting minimising
+start state: seen 1
+# shift right (3 states). Source: UTM.pdf p.2 mid.
+# "moves 1s & 0s one to right until ⊔"
+table:
+  seen 1:
+    '1': [R]                # 1/1,R self-loop (carrying 1, read 1, write 1)
+    '0': [seen 0, '1', R]   # 0/1,R — read 0, write carried 1, now carrying 0
+    ' ': [done, '1', R]     # ⊔/1,R — write 1 and halt
+  seen 0:
+    '0': [R]                # 0/0,R self-loop
+    '1': [seen 1, '0', R]   # 1/0,R — read 1, write carried 0, now carrying 1
+    ' ': [done, '0', R]     # ⊔/0,R — write 0 and halt
+  done:

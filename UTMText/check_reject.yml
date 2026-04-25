@@ -1,0 +1,33 @@
+formalism: nesting minimising
+start state: check reject
+# check reject (12 states = 5 + 7). Source: UTM.pdf p.6 top.
+# Checks whether the simulated TM is in its reject state. If so, the
+# UTM transitions to its own `reject` state (halting). Otherwise,
+# continues to the next step via `done`.
+# Uses `shift dub R` as a subroutine.
+#
+# Note on the `#1/#1,R #0/#0,R → reject` path with Samhain's comment
+# "this is a failure, not rejection": this path represents malformed
+# input, not the simulated TM rejecting.
+#
+# flag: `t` node structure at top of diagram unclear (possibly a
+# reject-marker state); my transcription merges it into the check-path.
+table:
+  check reject:
+    - "shift dub R":
+        # do check section
+        '1': [do check, R]
+  do check:
+    '00': [R]                  # self-loop over 00 dubs
+    '10': [to front of dub, L]
+    '01': [to front of dub, L]
+    '11': [reject, R]          # THIS is the rejection condition
+    # failure paths (malformed input, per Samhain's marginal note)
+    '#1': [reject, R]
+    '#0': [reject, R]
+  to front of dub:
+    '00': [L]
+    '1': [pre_done, R]
+  pre_done:
+    gamma: [done, L]
+  done:

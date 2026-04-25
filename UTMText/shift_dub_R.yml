@@ -1,0 +1,34 @@
+formalism: nesting minimising
+start state: to read ready
+# shift dub R (7 states). Source: UTM.pdf p.5 mid.
+# Shifts a dub one cell to the right. Works by reading the dub's chars,
+# remembering them in the state, writing the old neighbor's chars at the
+# old position, and reconstituting the dub at the new position.
+# Heavy α/β relabeling throughout; the compiler will expand these into
+# 4 concrete copies per state per the D1 answer.
+#
+# flag: the diagram labels `α1/α,R` and `α0/α,R` etc. leave the second
+# character off the write side. My reading is that the write is a
+# SINGLE char (not dub) during the transit, and then the dub gets
+# reconstituted on the `seen X → to front of dub` edge with `α/α1,L`
+# style. Samhain, please confirm — this is the most speculative part
+# of my transcription.
+table:
+  to read ready:
+    alpha_beta: [ready to read, R]   # αβ/αβ,R — step off current dub L-elem
+  ready to read:
+    alpha_1: [seen 1, alpha, R]      # α1/α,R — read dub ending 1, remember
+    alpha_0: [seen 0, alpha, R]      # α0/α,R — read dub ending 0, remember
+  seen 1:
+    alpha_1: [R]                     # α1/α1,R self-loop — carrying 1
+    alpha: [to front of dub, alpha_1, L]  # α/α1,L — plant carried 1 as dub
+  seen 0:
+    alpha_0: [R]                     # α0/α0,R self-loop — carrying 0
+    alpha: [to front of dub, alpha_0, L]  # α/α0,L — plant carried 0 as dub
+  to front of dub:
+    alpha_1: [L]                     # walk back L through dubs
+    alpha_0: [L]
+    gamma: [pre_done, R]             # stepped off, bounce
+  pre_done:
+    gamma: [done, L]                 # land on first dub elem
+  done:

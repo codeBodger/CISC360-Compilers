@@ -1,0 +1,22 @@
+formalism: nesting minimising
+start state: to left
+# to left (12 = 3 + 9 states). Source: UTM.pdf p.2 mid.
+# "shifts dub left (shift dub L) until reading ⊦"
+#
+# Loop: shift dub L, then check the just-revealed char.
+# On σ (input symbol): step L back to dub-start position via
+#   `back to dub start`, then re-enter `to left` to shift again.
+# On ⊦: step R, then γ/γ,L to land on first dub elem, done.
+#
+# flag: exit-label from `shift dub L` to `back to dub start` reads
+# as `σ/σ,L` in my zoom. Could be `γ/γ,L` instead. Please verify.
+table:
+  to left:
+    - "shift dub L":
+        sigma: [back to dub start, L]
+        '[': [saw mark, R]
+  back to dub start:
+    gamma: [to left, R]
+  saw mark:
+    gamma: [done, L]
+  done:

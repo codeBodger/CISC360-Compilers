@@ -1,0 +1,30 @@
+formalism: nesting minimising
+start state: q
+# verify γ before H (9 states). Source: UTM.pdf p.3 bot.
+# Per Samhain's note on p.3: "to* H is identical to to H, just with
+# THIS as verify" — "this" being a verify variant drawn nearby on
+# p.3 bot. Structure: scan σ0-ending dubs R, looking for an H-marker.
+# yes-path if found, no-path otherwise.
+#
+# flag: this is named by me as a distinct subroutine because the
+# diagram draws it separately. If it actually consolidates with one
+# of the other verify variants (verify #1, verify γ' placed before
+# H), please consolidate.
+table:
+  q:
+    sigma_0: [R]               # σ0/σ0,R self-loop
+    '11': [yes_tfd, L]         # flag: uncertain which dubs go yes/no
+    '#1': [yes_tfd, L]
+    '01': [no_tfd, L]
+  yes_tfd:
+    sigma_0: [L]
+    gamma: [yes_pre, R]
+  yes_pre:
+    gamma: [yes, L]
+  no_tfd:
+    sigma_0: [L]
+    gamma: [no_pre, R]
+  no_pre:
+    gamma: [no, L]
+  yes:
+  no:
