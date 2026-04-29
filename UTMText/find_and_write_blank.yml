@@ -1,5 +1,5 @@
 formalism: nesting minimising
-start state: find and write blank
+start state: to front of dub
 # find and write ⊔ (62 states = 15 + 12 + 4·2 + 14 + 15 - 2).
 # Source: UTM.pdf p.4 mid-bot.
 # Writes a ⊔ (blank) in the correct position on the tape — used when
@@ -7,65 +7,78 @@ start state: find and write blank
 # `to left` (12), `to dub start from R` (4, called twice), `move to #`
 # (14), `to H` (15), plus 15 states of novel logic.
 #
-# flag: this is the densest diagram in the UTM along with `find trans`.
+# resolved: this is the densest diagram in the UTM along with `find trans`.
 # The bleed-through from the back of the page obscures many labels.
 # I have the high-level skeleton; interior labels need Samhain's
 # verification. MY TRANSCRIPTION IS BEST-EFFORT AND UNVERIFIED.
+# NOTE FROM SAMHAIN: Oooof...  Impressively bad, on this one.
 #
 # Phase 1 (top row, ~15 states): walks through to left's Q→Γ→Σ→s→t
 # marker-dubs similar to init, landing at t.
 # Phase 2 (middle row, ~35 states): del dubs → get ⊔s 0s → fix # →
 # move to # → to dub start from R → (loop via F state)
 # Phase 3 (bottom row, ~12 states): to H → del H → write ⊔ → done
+
+# NOTE FROM SAMHAIN, not regarding the AI: Looking at this again, I feel like
+# this is very wrong, and rather *does* need to look more like the crossed out
+# one above it, with the loads of `Shift dub R`s.  Basically, it looks like
+# we're looping through dubs for *ever*...  Hopefully it's right, though.
+
 table:
-  find and write blank:
+  to front of dub:
+    'α0': [L]
+    'α1': [L]
     # Phase 1: init-like walk through encoded TM sections
-    - "to front of dub"       # shared "to front of dub" helper
-    - "to left":
-        '[': [Q_phase, R]
-  Q_phase:
+    gamma: [{gamma: [['to left': {'[': [Q, R]}], L]}, R]
+  Q:
     '0β': [R]                   # self-loop on 0β cells
-    '1β': [Γ_phase, R]          # 1β/1β,R advance
-  Γ_phase:
+    '1β': [Γ, R]          # 1β/1β,R advance
+  Γ:
     '0β': [R]
-    '1β': [Σ_phase, R]
-  Σ_phase:
+    '1β': [Σ, R]
+  Σ:
     '0β': [R]
-    '1β': [s_phase, R]
-  s_phase:
+    '1β': [s, R]
+  s:
     '0β': [R]
-    '1β': [t_phase, R]
-  t_phase:
+    '1β': [t, R]
+  t:
     '0β': [R]
-    '1β': [r_phase, R]          # flag: confirm target state
-  r_phase:
+    '1β': [r, R]          # resolved: confirm target state
+  r:
     '0β': [R]
     # Phase 2 — del dubs, etc.
-    # flag: rest of diagram has too many states to fit in this pass
+    # resolved: rest of diagram has too many states to fit in this pass
     # reliably. Transcribing as a best-effort chain.
-    alpha: [del dubs, L]
+    # Holy crap, it's not following the arrows, but rather jumping back to the
+    # beginning...
+    '1β': [left, R]
+  left:
+    '0β': [R]
+    '1β':
+      - - to_dub_start_from_R
+        - move_to_hash:
+            gamma: [fix hash, L]
+      - '#β'  # not entirely sure why that's a hash...
+      - R
+  fix hash:
+    '#1': ["get blank's 0s", '11', R]
+  "get blank's 0s":
+    '0β': ['00', R]
+    '1β': [del dubs, '1', R]
   del dubs:
-    '1β': [get blanks 0s, '1', R]  # flag: uncertain label
-  get blanks 0s:
-    '0β': ['00', R]                # self-loop-ish
-    '#1': [fix sharp, '1', R]
-  fix sharp:
-    gamma: [move to sharp section, L]
-  move to sharp section:
-    - "move to #":
-        # after move to #, call to dub start from R, then loop to F
-        epsilon: F
-  F:
-    '0/0': [R]                     # flag
-    # eventually exits to Phase 3
-    gamma: [to H section, L]
-  to H section:
-    - "to H":
-        gamma: [del H, R]
+    'α1': ['α', R]
+    'α0': ['α', R]
+    'α':
+      - - to_dub_start_from_R
+        - to_H:
+            gamma: [del H, L]
+      - L
   del H:
-    'H1': ['1', R]                 # flag
-    'H': ["write 0s", R]
+    'H1': ['11', write 0s, R]                 # resolved
+                                # how the hell did it see two transitions???
   "write 0s":
-    gamma: [' ', R]                # ⊔/⊔,L — write blanks
-    ' ': [done, R]
+    # What the actual hell.  It was impressively bad on this...
+    ' 0': ['00', R]
+    ' ': [done, H, L]
   done:
