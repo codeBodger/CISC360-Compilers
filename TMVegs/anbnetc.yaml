@@ -1,0 +1,53 @@
+input: '[abbbbaabbb'
+blank: ' '
+start state: SS
+table:
+  SS:
+    '[': {R: S}
+    [A,B,' ',a,b]: {R: failure}
+  S:
+    a      : {write: A, R: through_as}
+    b      : {write: B, R: through_bs}
+    ' '    : {R: success}
+    [A,B,'[']: {R: failure}
+  through_as:
+    a: {R}
+    B: {R: through_Bs}
+    [A,'[']: {R: failure}
+    ' ': {L: what}
+    b: {write: B, R: through_bs}
+  through_bs:
+    b: {R}
+    A: {R: through_As}
+    [B,'[']: {R: failure}
+    ' ': {L: what}
+    a: {write: A, R: through_as}
+  through_As:
+    a: {write: A, R: through_as}
+    A: {R}
+    [b,B,'[',' ']: {R: failure}
+  through_Bs:
+    b: {write: B, R: through_bs}
+    B: {R}
+    [a,A,'[',' ']: {R: failure}
+  what:
+    ' ': {R: failure}
+    '[': {R: success}
+    [a,b]: {L: w_lowers}
+    [A,B]: {L: caps_only}
+  w_lowers:
+    [B,A,b,a]: {L}
+    '[': {R: reS}
+    ' ': {R: failure}
+  caps_only:
+    [A,B]: {L}
+    '[': {R: success}
+    [a,b,' ']: {R: failure}
+  reS:
+    B: {R: through_Bs}
+    b: {write: B, R: through_bs}
+    ['[',' ']: {R: failure}
+    a: {write: A, R: through_as}
+    A: {R: through_As}
+  failure:
+  success:
