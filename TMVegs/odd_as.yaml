@@ -1,0 +1,20 @@
+input: '[abbbaba' # This should accept
+# Here are some others that should accept: '[baabbbabaabb', '[a', '[ba'
+# Here are some that should reject: '[b', '[aabaaaba', '[bbbabbba', '[aa', '['
+blank: ' '
+start state: S
+table:
+        S:
+                '[': {R: q1}
+                [a, b, ' ']: {R: reject}
+        q1:
+                ['[', ' ']: {R: reject}
+                a: {R: q2}
+                b: {R}
+        q2:
+                '[': {R: reject}
+                a: {R: q1}
+                b: {R}
+                ' ': {R: accept}
+        accept:
+        reject:
