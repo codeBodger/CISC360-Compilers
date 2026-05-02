@@ -1,0 +1,12 @@
+formalism: nesting minimising
+alphabet: ['0', '1']
+tape symbols: ['0', '1', '[', ' ']
+left: '['
+blank: ' '
+start state: S
+reject: reject
+accept: accept
+table:
+        S:
+                - shift
+                - "2sc"
