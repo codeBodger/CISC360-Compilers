@@ -11,7 +11,9 @@ table:
     - "shift dub R":
         alpha: [verify wrap, R]       # α/α,R — flag unsure α vs σ
   verify wrap:
-    - "verify γ' placed before H":
+    - "verify gp placed before H":
         no epsilon: to H              # loop: shift again
         yes epsilon: done
   done:
+
+  # WEPS edits here: changed line 14 to be in accordance with naming conventions of the repo.

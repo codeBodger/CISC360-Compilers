@@ -6,3 +6,5 @@ blank: ' '
 start state: [init, {epsilon: [proc]}]
 reject: reject
 accept: accept
+
+# WEPS: verified!

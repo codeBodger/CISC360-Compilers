@@ -12,3 +12,5 @@ table:
     '00': ['0', R]          # 00/0,R — rewrite dub as single, move R
     '1': [done, R]          # 1/1,R — hit trailing sentinel, done
   done:
+
+# WEPS: verified!
