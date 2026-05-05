@@ -15,3 +15,5 @@ table:
         no epsilon: pre_shift         # no → loop back and shift again
         yes epsilon: done             # yes → success, exit
   done:
+
+#WEPS edits here: changed the filename to hash because that makes more sense I think.

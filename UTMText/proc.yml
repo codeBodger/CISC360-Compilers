@@ -12,8 +12,11 @@ table:
     - check reject
     - find trans
     - delete dub
-    - "dubify q'γ'i"
+    - "dubify qpgpi"
     - to H
-    - "write γ'"
+    - "write gp"
     - "do i; del 1i"
     - proc                  # loop back via the `ready` ε-hop
+
+# WEPS edits here: changed "dubify q'γ'i" and "write γ'" 
+# to be consistent with files in the repo.

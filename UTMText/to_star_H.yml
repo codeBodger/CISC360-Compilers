@@ -16,7 +16,9 @@ table:
     - "shift dub R":
         alpha: [verify wrap, R]
   verify wrap:
-    - "verify γ before H":
+    - "verify gamma before H":
         no epsilon: to star H
         yes epsilon: done
   done:
+
+  # WEPS edits here: changed the gamma UTF to the word 'gamma'
