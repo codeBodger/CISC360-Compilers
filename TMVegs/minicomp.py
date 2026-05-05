@@ -5,28 +5,43 @@ from ruamel.yaml import YAML
 
 def main():
         yaml = YAML(typ='safe')
-        machine_yaml = yaml.load(input())
+        file = []
+        while True:
+                try: file.append(input())
+                except EOFError: break
+
+        machine_yaml = yaml.load("\n".join(file))
+
+        # print(machine_yaml)
 
         inp = machine_yaml['input']
 
-        Q = {}
-        Gamma = {}
-        all_transitions = []
+        Q = set()
+        Gamma = set()
+        all_transitions = {}
         for name, transitions in machine_yaml["table"].items():
                 Q.add(name)
+                if transitions is None: transitions = {}
                 for k, v in transitions.items():
                         qp = v.get('R', v.get('L', name))
                         if qp is None: qp = name
                         d = 'R' if 'R' in v else 'L'
-                        if isinstance(k, str):
+                        if type(k) in (int, str):
+                                k = str(k)
                                 Gamma.add(k)
-                                gp = v.get('write', k)
-                                all_transitions.append(((name, k), (qp, gp, d)))
+                                gp = str(v.get('write', k))
+                                all_transitions[(name, k)] = (qp, gp, d)
                                 continue
                         for sym in k:
+                                sym = str(sym)
                                 Gamma.add(sym)
-                                gp = v.get('write', sym)
-                                all_transitions.append(((name, k), (qp, gp, d)))
+                                gp = str(v.get('write', sym))
+                                all_transitions[(name, sym)] = (qp, gp, d)
+
+        for q in Q:
+                for g in Gamma:
+                        if (q, g) not in all_transitions:
+                                all_transitions[(q, g)] = (q, g, 'R')
 
         s = machine_yaml["start state"]
         assert s in Q
@@ -50,7 +65,7 @@ def main():
                 + '1' + '0'*Gamma.index(blank) + '1')
 
         table_bits = "".join(
-                [table_entry(trans, Q, Gamma) for trans in all_transitions])
+                [table_entry(trans, Q, Gamma) for trans in all_transitions.items()])
 
         machine_bits = prefix_bits + table_bits
 
@@ -64,6 +79,7 @@ def main():
 
 
 def table_entry(trans, Q, Gamma):
+        # print(trans)
         q = trans[0][0]
         g = trans[0][1]
         qp = trans[1][0]
