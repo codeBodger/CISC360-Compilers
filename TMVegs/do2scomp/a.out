@@ -5,7 +5,7 @@ table:
                 '[': {R: "main.shift.1.S"}
                 ['1', '0', ' ']: {R: reject}
         "main.shift.1.S":
-                ['[', ' ']: reject
+                ['[', ' ']: {R: reject}
                 '0': {R: "main.shift.1.seen 0"}
                 '1': {R: "main.shift.1.seen 1"}
         "main.shift.1.seen 0":
