@@ -4,50 +4,50 @@ start state: SS
 table:
   SS:
     '[': {R: S}
-    [A,B,' ',a,b]: {R: failure}
+    [A,B,' ',a,b]: {R: reject}
   S:
     a      : {write: A, R: through_as}
     b      : {write: B, R: through_bs}
-    ' '    : {R: success}
-    [A,B,'[']: {R: failure}
+    ' '    : {R: accept}
+    [A,B,'[']: {R: reject}
   through_as:
     a: {R}
     B: {R: through_Bs}
-    [A,'[']: {R: failure}
+    [A,'[']: {R: reject}
     ' ': {L: what}
     b: {write: B, R: through_bs}
   through_bs:
     b: {R}
     A: {R: through_As}
-    [B,'[']: {R: failure}
+    [B,'[']: {R: reject}
     ' ': {L: what}
     a: {write: A, R: through_as}
   through_As:
     a: {write: A, R: through_as}
     A: {R}
-    [b,B,'[',' ']: {R: failure}
+    [b,B,'[',' ']: {R: reject}
   through_Bs:
     b: {write: B, R: through_bs}
     B: {R}
-    [a,A,'[',' ']: {R: failure}
+    [a,A,'[',' ']: {R: reject}
   what:
-    ' ': {R: failure}
-    '[': {R: success}
+    ' ': {R: reject}
+    '[': {R: accept}
     [a,b]: {L: w_lowers}
     [A,B]: {L: caps_only}
   w_lowers:
     [B,A,b,a]: {L}
     '[': {R: reS}
-    ' ': {R: failure}
+    ' ': {R: reject}
   caps_only:
     [A,B]: {L}
-    '[': {R: success}
-    [a,b,' ']: {R: failure}
+    '[': {R: accept}
+    [a,b,' ']: {R: reject}
   reS:
     B: {R: through_Bs}
     b: {write: B, R: through_bs}
-    ['[',' ']: {R: failure}
+    ['[',' ']: {R: reject}
     a: {write: A, R: through_as}
     A: {R: through_As}
-  failure:
-  success:
+  reject:
+  accept:
