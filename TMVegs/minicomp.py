@@ -14,7 +14,7 @@ def main():
 
         # print(machine_yaml)
 
-        inp = machine_yaml['input']
+        inp = machine_yaml.get('input', "[")
 
         Q = set()
         Gamma = set()
