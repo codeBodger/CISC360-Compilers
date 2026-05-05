@@ -12,10 +12,12 @@ table:
     alpha_1: [to front of dub, L]   # α1/α1,L — found right end of dub
     '[': [pre_done, R]              # ⊦/⊦,R — re-routed curve to pre-done
   to front of dub:
-    alpha_beta: [L]                 # αβ/αβ,L — walk through dub
+    alpha_0: [L]                 # αβ/αβ,L — walk through dub
+    alpha_1: [L]
     gamma: [pre_done, R]            # γ/γ,R — stepped off dub onto non-dub
   pre_done:
     gamma: [done, L]                # γ/γ,L — final L to sit on first dub elem
   done:
 
 # WEPS: verified!
+# SRA fixed consistency with PDF

@@ -1,5 +1,5 @@
 formalism: nesting minimising
-start state: to star H
+start state: S
 # to* H (15 states = 1 + 7 + 9 - 2, same structure as to H).
 # Per Samhain's marginal note on p.3: "to* H is identical to to H,
 # just with THIS as verify" — where THIS = the verify variant drawn
@@ -12,13 +12,14 @@ start state: to star H
 # flag: I'm not 100% sure "this" verify wasn't already one of the
 # existing subroutines. If it's a new one, it needs its own file.
 table:
-  to star H:
+  S:
     - "shift dub R":
-        alpha: [verify wrap, R]
+        sigma: [verify wrap, R]
   verify wrap:
-    - "verify gamma before H":
-        no epsilon: to star H
+    - "verify gamma before H star":
+        no epsilon: S
         yes epsilon: done
   done:
 
-  # WEPS edits here: changed the gamma UTF to the word 'gamma'
+# WEPS edits here: changed the gamma UTF to the word 'gamma'
+# SRA it's a sigma, not an alpha here, too.  Renamed pseudo start.

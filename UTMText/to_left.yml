@@ -16,10 +16,11 @@ table:
         sigma: [back to dub start, L]
         '[': [saw left, R]
   back to dub start:
-    gamma: [shift dub L, R]
+    gamma: [S, R]
   saw left:
     gamma: [done, L]
   done:
 
-  # WEPS edits here: renamed start state "to left" to "S" for consistency. 
-  # also renamed "saw mark" to "saw left" in pairing with intended naming convention for symbol '⊦'.
+# WEPS edits here: renamed start state "to left" to "S" for consistency.
+# also renamed "saw mark" to "saw left" in pairing with intended naming convention for symbol '⊦'.
+# SRA the gamma transition needs to go to S, not the subroutine.`

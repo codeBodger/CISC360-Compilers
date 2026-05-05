@@ -1,13 +1,12 @@
 formalism: nesting minimising
-start state: S
+start state: seen 1
 # shift right (3 states). Source: UTM.pdf p.2 mid.
 # "moves 1s & 0s one to right until ⊔"
 table:
-  S:
-    - "seen 1":
-        '1': [R]                # 1/1,R self-loop (carrying 1, read 1, write 1)
-        '0': [seen 0, '1', R]   # 0/1,R — read 0, write carried 1, now carrying 0
-        ' ': [done, '1', R]     # ⊔/1,R — write 1 and halt
+  seen 1:
+    '1': [R]                # 1/1,R self-loop (carrying 1, read 1, write 1)
+    '0': [seen 0, '1', R]   # 0/1,R — read 0, write carried 1, now carrying 0
+    ' ': [done, '1', R]     # ⊔/1,R — write 1 and halt
   seen 0:
     '0': [R]                # 0/0,R self-loop
     '1': [seen 1, '0', R]   # 1/0,R — read 1, write carried 0, now carrying 1
@@ -15,4 +14,5 @@ table:
   done:
 
 
-  # WEPS edits here: No pseudo start state present, added S for consistency
+# WEPS edits here: No pseudo start state present, added S for consistency
+# SRA removed S; the first state isn't a subroutine, so it doesn't make sense
