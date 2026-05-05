@@ -1,0 +1,17 @@
+input: '[10 11 00'
+blank: ' '
+start state: start
+table:
+  start:
+    '[': {R: chain_state}
+    [0, 1, ' ']: {R: reject}
+  chain_state:
+    - "scan_right":
+        done: chain_state2
+    - "scan_right":
+        done: accept
+  chain_state2:
+    - "scan_right":
+        done: chain_state
+  accept:
+  reject:
