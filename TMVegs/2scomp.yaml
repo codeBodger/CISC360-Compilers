@@ -4,77 +4,77 @@ start state: SS
 table:
   SS:
     '[': {R: S}
-    [0,1,'#',V,' ']: {R: failure}
+    [0,1,'#',V,' ']: {R: reject}
   S:
     0: {write: 1, R: seen_0}
     1: {write: 1, R: seen_1}
     '#': {write: 0, R: seen_H}
-    ['[',V,' ']: {R: failure}
+    ['[',V,' ']: {R: reject}
   seen_0:
     ' ': {write: 0, L: to_H}
     0: {R}
     '#': {write: 0, R: seen_H}
     1: {write: 0, R: seen_1}
-    [V,'[']: {R: failure}
+    [V,'[']: {R: reject}
   seen_1:
     0: {write: 1, R: seen_0}
     '#': {write: 1, R: seen_H}
     ' ': {write: 1, L: to_H}
     1: {R}
-    [V,'[']: {R: failure}
+    [V,'[']: {R: reject}
   seen_H:
     '#': {R}
     ' ': {write: '#', L: seen_0} # not to_H: put a 0 if empty
     1: {write: '#', R: seen_1}
     0: {write: '#', R: seen_0}
-    [V,'[']: {R: failure}
+    [V,'[']: {R: reject}
   to_H:
     [0,1]: {L}
     '#': {L: inv_1}
-    ['[',' ',V]: {R: failure}
+    ['[',' ',V]: {R: reject}
   inv_1:
     1: {L: inv}
     '[': {R: to_end}
     0: {L}
-    [' ',V,'#']: {R: failure}
+    [' ',V,'#']: {R: reject}
   inv:
-    [' ',V,'#']: {R: failure}
+    [' ',V,'#']: {R: reject}
     1: {write: 0, L}
     0: {write: 1, L}
     '[': {R: to_end}
   to_end:
-    '[': {R: failure}
+    '[': {R: reject}
     [0,1,'#',V]: {R}
     ' ': {L: read}
   read:
-    [' ','[',V]: {R: failure}
+    [' ','[',V]: {R: reject}
     1: {write: ' ', L: saw_1}
     0: {write: ' ', L: saw_0}
     '#': {L: ens_no_1sL}
   saw_1:
-    ['[',V,' ']: {R: failure}
+    ['[',V,' ']: {R: reject}
     [0,1]: {L}
     '#': {L: H_and_1}
   saw_0:
     [0,1]: {L}
-    ['[',V,' ']: {R: failure}
+    ['[',V,' ']: {R: reject}
     '#': {L: H_and_0}
   ens_no_1sL:
     [V,0]: {L}
-    '[': {R: success}
-    [1,'#',' ']: {R: failure}
+    '[': {R: accept}
+    [1,'#',' ']: {R: reject}
   H_and_1:
-    [0,' ','#','[']: {R: failure}
+    [0,' ','#','[']: {R: reject}
     V: {L}
     1: {write: V, R: to_end}
   H_and_0:
     V: {L}
     '[': {R: ens_no_1sR}
-    ['#',' ',1]: {R: failure}
+    ['#',' ',1]: {R: reject}
     0: {write: V, R: to_end}
   ens_no_1sR:
-    ' ': {R: success}
+    ' ': {R: accept}
     ['#',0,V]: {R}
-    ['[',1]: {R: failure}
-  failure:
-  success:
+    ['[',1]: {R: reject}
+  reject:
+  accept:
