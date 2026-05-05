@@ -1,11 +1,11 @@
 formalism: nesting minimising
-start state: move to sharp
+start state: S
 # move to # (14 states = 2 + 7 + 7 - 2). Source: UTM.pdf p.5 bot.
 # "moves the 1 to the hash w/ read head just after #1"
 # Chains: shift dub R subroutine, then verify #1; if verify says no,
 # loop back to shift dub R; if yes, done.
 table:
-  move to sharp:
+  S:
     gamma: [pre_shift, L]            # γ/γ,L — initial L step
   pre_shift:
     - "shift dub R":
@@ -15,3 +15,5 @@ table:
         no epsilon: pre_shift         # no → loop back and shift again
         yes epsilon: done             # yes → success, exit
   done:
+
+#WEPS edits here: changed the filename to hash because that makes more sense I think.

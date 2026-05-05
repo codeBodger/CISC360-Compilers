@@ -12,3 +12,7 @@ table:
     '1': [seen 1, '0', R]   # 1/0,R — read 1, write carried 0, now carrying 1
     ' ': [done, '0', R]     # ⊔/0,R — write 0 and halt
   done:
+
+
+# WEPS edits here: No pseudo start state present, added S for consistency
+# SRA removed S; the first state isn't a subroutine, so it doesn't make sense

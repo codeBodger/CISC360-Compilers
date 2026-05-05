@@ -12,8 +12,14 @@ table:
     - check reject
     - find trans
     - delete dub
-    - "dubify q'γ'i"
+    - "dubify qpgpi"
     - to H
-    - "write γ'"
-    - "do i; del 1i"
+    - "write gp"
+    - "do i del 1i"
+    - read gamma
     - proc                  # loop back via the `ready` ε-hop
+
+# WEPS edits here: changed "dubify q'γ'i" and "write γ'"
+# to be consistent with files in the repo.
+
+# SRA added missing read gamma, deleted semicolon not in file name
