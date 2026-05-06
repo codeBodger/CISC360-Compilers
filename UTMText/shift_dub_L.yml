@@ -5,28 +5,32 @@ start state: to read ready
 # with the added complication of not crossing ⊦ — has a reject path
 # if we hit the left-marker.
 #
-# flag: this diagram is particularly dense and my readings of several
+# resolved: this diagram is particularly dense and my readings of several
 # transit labels (especially the upper-curve `α/α,R` vs `α/α,L` back
 # edges) are best-effort. Please verify.
+# SRA: dense, my ass!  It's pretty open, if small writing.
 table:
   to read ready:
-    alpha_beta: [ready to read, R]
+    alpha: [ready to read, R]
+    '[': [{gamma: [done, L]}, R]
   ready to read:
     alpha_1: [seen 1, alpha, L]
     alpha_0: [seen 0, alpha, L]
-    '[': [reject, R]               # ⊦/⊦,R — can't shift past the marker
+    # '[': [reject, R]               # ⊦/⊦,R — can't shift past the marker
+    # that's not how I'm fixing that; a logical, but wrong halucination
+    alpha: [to to front of dub, L]
   seen 1:
-    alpha_beta: [wrote seen, alpha_1, R]  # αβ/α1,R — plant carried 1
+    alpha: [wrote seen, alpha_1, R]  # α/α1,R — plant carried 1
   seen 0:
-    alpha_beta: [wrote seen, alpha_0, R]  # αβ/α0,R — plant carried 0
+    alpha: [wrote seen, alpha_0, R]  # α/α0,R — plant carried 0
   wrote seen:
-    alpha: [to to front of dub, L]        # α/α,L — step back
+    # below was just wrong; reading the wrong transition...
+    alpha: [ready to read, R]        # α/α,L — step back
   to to front of dub:
     alpha: [to front of dub, L]           # α/α,L — more stepping
+    '[': [{gamma: [done, L]}, R]
   to front of dub:
     alpha_0: [L]
     alpha_1: [L]
-    gamma: [pre_done, R]
-  pre_done:
-    gamma: [done, L]
+    gamma: [{gamma: [done, L]}, R]
   done:

@@ -8,7 +8,7 @@ start state: S
 #   `back to dub start`, then re-enter `to left` to shift again.
 # On ⊦: step R, then γ/γ,L to land on first dub elem, done.
 #
-# flag: exit-label from `shift dub L` to `back to dub start` reads
+# resolved: exit-label from `shift dub L` to `back to dub start` reads
 # as `σ/σ,L` in my zoom. Could be `γ/γ,L` instead. Please verify.
 table:
   S:

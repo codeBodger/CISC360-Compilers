@@ -71,6 +71,6 @@ table:
   # Chose to have a pseudostate here, to avoid duplicating
   # ["to dub start from R", done]
   tdsfR:
-    "to dub start from R"
-    done
+    - "to dub start from R"
+    - done
   done:

@@ -173,26 +173,26 @@ with Sunday evening.
 
 Checked if fully verified
 
-- [ ] check_accept.yml
+- [x] check_accept.yml
 - [x] check_reject.yml
 - [x] delete_dub.yml
 - [x] do_i_del_1i.yml
-- [ ] dubify_qpgpi.yml
+- [x] dubify_qpgpi.yml
 - [x] find_and_write_blank.yml
 - [x] find_trans.yml
 - [x] init.yml
 - [x] main.yml
 - [x] move_to_hash.yml
 - [x] proc.yml
-- [ ] read_gamma.yml
-- [ ] shift_dub_L.yml
-- [ ] shift_dub_R.yml
+- [x] read_gamma.yml
+- [x] shift_dub_L.yml
+- [x] shift_dub_R.yml
 - [x] shift_right.yml
 - [x] to_H.yml
 - [x] to_dub_start_from_R.yml
 - [x] to_left.yml
 - [x] to_star_H.yml
-- [ ] verify_gamma_before_H.yml
-- [ ] verify_gp_before_H.yml
+- [x] verify_gamma_before_H.yml
+- [x] verify_gp_before_H.yml
 - [x] verify_hash1.yml
-- [ ] write_gp.yml
+- [x] write_gp.yml
