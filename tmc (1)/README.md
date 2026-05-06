@@ -4,6 +4,15 @@ Compiles ShortRepr Turing machine descriptions (Samhain's nesting-minimising
 formalism with subroutines, α-parameterized states, ε-transitions, and chain
 state bodies) to flat TMVRepr YAML.
 
+## Usage
+
+`python -m src.cli <clargs>`
+- See [Compilation](#compilation) and elsewhere for details
+- You may need to install `ruamel.yaml` (`pip install ruamel.yaml`)
+- You may need to do this all in a `venv`
+    - `python3 -m venv ./venv`
+    - `. venv/bin/activate`
+
 ## Status
 
 ### What works
@@ -56,7 +65,7 @@ work — parser, basic linking, ε-resolution, dash-merge naming, transition
 completion — are the foundation; the missing pieces are largely about
 broader formalism coverage.
 
-## Usage
+## Compilation
 
 ```
 $ tmc <input1.yml> [input2.yml ...] [-o output.yml]
