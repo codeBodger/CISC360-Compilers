@@ -9,8 +9,9 @@ start state: S
 # The "this" verify has 9 states. I've named it `verify γ before H`
 # (to distinguish from `verify γ' placed before H`).
 #
-# flag: I'm not 100% sure "this" verify wasn't already one of the
+# resolved: I'm not 100% sure "this" verify wasn't already one of the
 # existing subroutines. If it's a new one, it needs its own file.
+# SRA: really just not worrying about this.  Don't care much about redundancy
 table:
   S:
     - "shift dub R":
