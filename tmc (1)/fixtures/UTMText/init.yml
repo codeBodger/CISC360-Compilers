@@ -1,0 +1,28 @@
+formalism: original
+start state: Q
+table:
+  Q:
+    ['0', '[']: [R]
+    '1': [Gamma, R]
+  Gamma:
+    '0': [R]
+    '1': [Sigma, R]
+  Sigma:
+    '0': [R]
+    '1': [s, R]
+  s:
+    '0': ['00', R]
+    '1': ['to front of dub', '11', L]
+  'to front of dub':
+    '00': [L]
+    '1':
+      - 'move to #'
+      - R
+      - epsilon:
+          '0': ['00', R]
+          '1':
+            - 'shift right'
+            - H
+            - R
+            - epsilon: ['to dub start from R', {epsilon: done}]
+  done:

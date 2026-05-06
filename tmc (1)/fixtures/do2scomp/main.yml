@@ -1,0 +1,15 @@
+formalism: nesting minimising
+alphabet: ['0', '1']
+tape symbols: ['0', '1', '[', ' ']
+left: '['
+blank: ' '
+# Here, there is a pseudo (not an actual concept; a state is a state) start
+# state, resulting in one fewer epsilon transition in need of elimination, and
+# thereby a shorter start state name in the compiled version.
+start state: S
+reject: reject
+accept: accept
+table:
+    S:
+        - shift
+        - "2sc"

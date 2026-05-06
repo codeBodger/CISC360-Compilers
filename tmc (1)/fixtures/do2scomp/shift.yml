@@ -1,0 +1,11 @@
+formalism: nesting minimising
+start_state: "S'"
+table:
+    "S'":
+        '[': [S, R]
+    S:
+        alpha: ["seen alpha -> alpha'", R]
+    "seen alpha -> alpha'":
+        alpha: ["seen alpha -> alpha'", "alpha'", R]
+        ' ': [done, "alpha'", R]
+    done:

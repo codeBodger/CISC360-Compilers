@@ -1,0 +1,35 @@
+blank: ' '
+start state: "main.shift.1.S'"
+table:
+    "main.shift.1.S'":
+        '[': {R: "main.shift.1.S"}
+        ['1', '0', ' ']: {R: reject}
+    "main.shift.1.S":
+        ['[', ' ']: {R: reject}
+        '0': {R: "main.shift.1.seen 0"}
+        '1': {R: "main.shift.1.seen 1"}
+    "main.shift.1.seen 0":
+        '[': {R: reject}
+        '0': {R: "main.shift.1.seen 0"}
+        '1': {R: "main.shift.1.seen 1", write: '0'}
+        ' ': {R: "main.shift.1.done-main.2sc.1.S", write: '0'}
+    "main.shift.1.seen 1":
+        '[': {R: reject}
+        '0': {R: "main.shift.1.seen 0", write: '1'}
+        '1': {R: "main.shift.1.seen 1"}
+        ' ': {R: "main.shift.1.done-main.2sc.1.S", write: '1'}
+    "main.shift.1.done-main.2sc.1.S":
+        ['[', '0', '1']: {R: reject}
+        ' ': {L: "main.2sc.1.do"}
+    "main.2sc.1.do":
+        '[': {R: accept}
+        '0': {L}
+        '1': {L: "main.2sc.1.flip"}
+        ' ': {R: reject}
+    "main.2sc.1.flip":
+        '[': {R: accept}
+        '0': {L, write: '1'}
+        '1': {L, write: '0'}
+        ' ': {R: reject}
+    accept:
+    reject:

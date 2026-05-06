@@ -1,0 +1,32 @@
+formalism: nesting minimising
+start state: to read ready
+# shift dub L (9 states). Source: UTM.pdf p.5 mid.
+# Shifts a dub one cell to the left. Symmetric to shift dub R but
+# with the added complication of not crossing ⊦ — has a reject path
+# if we hit the left-marker.
+#
+# flag: this diagram is particularly dense and my readings of several
+# transit labels (especially the upper-curve `α/α,R` vs `α/α,L` back
+# edges) are best-effort. Please verify.
+table:
+  to read ready:
+    alpha_beta: [ready to read, R]
+  ready to read:
+    alpha_1: [seen 1, alpha, L]
+    alpha_0: [seen 0, alpha, L]
+    '[': [reject, R]               # ⊦/⊦,R — can't shift past the marker
+  seen 1:
+    alpha_beta: [wrote seen, alpha_1, R]  # αβ/α1,R — plant carried 1
+  seen 0:
+    alpha_beta: [wrote seen, alpha_0, R]  # αβ/α0,R — plant carried 0
+  wrote seen:
+    alpha: [to to front of dub, L]        # α/α,L — step back
+  to to front of dub:
+    alpha: [to front of dub, L]           # α/α,L — more stepping
+  to front of dub:
+    alpha_0: [L]
+    alpha_1: [L]
+    gamma: [pre_done, R]
+  pre_done:
+    gamma: [done, L]
+  done:

@@ -1,0 +1,13 @@
+formalism: nesting minimising
+start state: S
+table:
+    S:
+        ' ': [do, L]
+    do:
+        '0': [L]
+        '1': [flip, L]
+        '[': [accept, R]
+    flip:
+        '0': ['1', L]
+        '1': ['0', L]
+        '[': [accept, R]

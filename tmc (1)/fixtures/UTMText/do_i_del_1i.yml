@@ -1,0 +1,76 @@
+formalism: nesting minimising
+start state: to del 1
+# do i; del 1i (76 states = 12 + 62 + 4 - 2). Source: UTM.pdf p.3 mid.
+# Advances the simulated TM's "instruction pointer" i by incrementing
+# 1^i unary. Uses `find and write ⊔` (62 states) and `to dub start
+# from R` (4 states) as subroutines.
+# NOTE FROM SAMHAIN: That's not really what it does at all.  `i` is not the pc
+# It *does* move the localtion of the read-write head, *as per* i's value.
+#
+# resolved: this is one of the largest and densest diagrams. I can see the
+# high-level skeleton but many transit labels are hard to verify under
+# the bleed-through from the back of the page. Samhain, this one
+# especially needs your review.
+# It definitely could *not* see the high-level skeleton...
+#
+# Structure I extracted:
+#   to del 1 → del 1 → do i → flip w/1 → to next → end? → (loop) → done
+#                    ↓ (10/1,L; ⊔0/⊔,L)
+#                    alternate branch → to next → end? → flip w/0 → loop
+# All the flip-w/1 and flip-w/0 transitions use α/β shorthand; the
+# compiler will expand them.
+table:
+  to del 1:
+    gamma: [del 1, L]           # γ/γ,L
+  del 1:
+    'H1': [do i, 'H', R]        # H1/H,R — delete the 1 after H
+    # resolved: other transitions unclear
+    # there are no other transitions...
+  do i:
+    '⊔1': [[find_and_write_blank, tdsfR], '⊔', L]     # ⊔1/⊔,L -> fawb -> done
+    '11': [flip w1 top, 'H', L]     # 11/H,L (resolved: label guessed)
+                                    # not sure what 'label guessed' means...
+                                    # decided to distinguish 'top' vs 'bottom'
+    '10': [to next bottom, '1', L]     # 10/1,L
+    '⊔0': [to next bottom, '⊔', L]     # ⊔0/⊔,L
+    # resolved: more transitions unclear
+    # first transition above added
+  flip w1 top:
+    'H': [to next top, '1', R]      # H/1,R
+                                    # was going to wrong `to next`...
+    # '0': [flip w0, 'H', L]      # 0/H,L (resolved)
+                                  # not extant...
+  flip w0 bottom:
+    # '1': [to next, '0', R]      # (resolved)
+                                  # not extant...
+    'Hβ': [to next bottom, '0β', L] # no idea how it read that as a 1...
+  # it seems that it got confused here about which `to next`, etc was which
+  to next top:
+    'H': ['end? top', R]       # H/H,R (no need to say H written...)
+    # other transitions unclear
+    # That's because there are none
+  to next bottom:
+    'Hβ': [end? bottom, L] # no need to say h_beta written...
+  end? top:
+    # '1': ["to dub start from R", L]  # 1/1,L → call subroutine → done
+                                       # That's just wrong, rewritten
+    '1': [tdsfR, L]  # 1/1,L → call subroutine → done
+    '0': [flip w0 top, 'H', L]    # 0/H,L
+    # resolved: not sure what the issue was; renamed to `...top`
+  end? bottom:
+    '0β': [flip w0 bottom, 'Hβ', R]
+    # '1β': ["to dub start from R", L] # Just plain wrong
+    '1β': [flip w1 bottom, 'Hβ', R]
+  flip w0 top:
+    'H': [to next top, '0', R]      # ~~from the lower loop~~
+                                    # no idea what the issue was...
+  # to dub start from R called via list form to exit to done
+  # (implicit in the transitions above using ["to dub start from R", L])
+  flip w1 bottom:
+    'Hβ': [tdsfR, '1β', L]
+  # Chose to have a pseudostate here, to avoid duplicating
+  # ["to dub start from R", done]
+  tdsfR:
+    - "to dub start from R"
+    - done
+  done:
