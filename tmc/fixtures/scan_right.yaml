@@ -1,7 +1,0 @@
-# Simple subroutine: scan right until we hit a blank, then exit via 'done'
-scan:
-  ' ': {R: done}
-  [0, 1]: {R}
-  '[': {R: reject}
-done:
-reject:
