@@ -185,8 +185,8 @@ Checked if fully verified
 - [x] move_to_hash.yml
 - [x] proc.yml
 - [x] read_gamma.yml
-- [ ] shift_dub_L.yml
-- [ ] shift_dub_R.yml
+- [x] shift_dub_L.yml
+- [x] shift_dub_R.yml
 - [x] shift_right.yml
 - [x] to_H.yml
 - [x] to_dub_start_from_R.yml
