@@ -1,0 +1,25 @@
+formalism: nesting minimising
+start state: q
+# verify #1 (7 states). Source: UTM.pdf p.5 mid-bottom.
+# Scans right over σ0-ending dubs looking for sentinel #1.
+# Emits `yes` if found, `no` if a 01/11 dub (non-#1) is found instead.
+table:
+  q:
+    sigma_0: [R]              # σ0/σ0,R — walk R over 00, 10, #0
+    '#1': [yes_tfd, L]        # #1/#1,L — sentinel found → yes
+    '01': [no_tfd, L]         # 01/01,L — non-#1 dub ending in 1 → no
+    '11': [no_tfd, L]         # 11/11,L — non-#1 dub ending in 1 → no
+  yes_tfd:
+    sigma_0: [L]              # σ0/σ0,L — walk back L
+    gamma: [yes_pre, R]       # γ/γ,R — stepped off, bounce starts
+  yes_pre:
+    gamma: [yes, L]           # γ/γ,L — land on first elem of dub
+  no_tfd:
+    sigma_0: [L]
+    gamma: [no_pre, R]
+  no_pre:
+    gamma: [no, L]
+  yes:
+  no:
+
+#WEPS edits here: changed the filename to hash because that makes more sense I think.

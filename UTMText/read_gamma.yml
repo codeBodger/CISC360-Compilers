@@ -1,0 +1,39 @@
+formalism: nesting minimising
+start state: S
+# read γ (33 states = 7 + 12 + 15 - 1). Source: UTM.pdf p.3 bot.
+# Reads the current γ (tape symbol at the simulated TM's head position).
+# Uses `to left` (12 states) and `to* H` (15 states — same structure as
+# `to H` but uses a different verify subroutine per Samhain's marginal
+# note).
+#
+# resolved: this is one of the harder diagrams; my transcription of the
+# middle section (q → γ → del/rem γ → back to H) is best-effort.
+# The `HO/H,R` re-label transition from γ to del is particularly unclear.
+# SRA: Not sure how it just *missed* `to front of dub`.  Other than that, pretty
+# good; only some weird minor issues.
+table:
+  S:
+    - to left
+    - "to star H":
+        gamma: [q, R]      # γ/γ,R transit (resolved: could be αβ) Nope!
+  q:
+    alpha_0: [R]           # αβ0/αβ0,R self-loop (resolved) huh??
+    '11': ["γ state", R]
+    '#1': ["γ state", R]
+  "γ state":
+    '0': ['00', R]         # 0/00,R — mirror dubify-like action
+    '00': [R] # SRA: moved from in `q`; made no sense there
+    'H': [to front of dub, L]    # H/H,L — found H marker
+    'H0': [del rem γ, 'H', R]  # H0/H,R — begin erasure
+  del rem γ:
+    sigma_0: [sigma, R]             # σ/σ,R self-loop (resolved: σ*0*/σ,R)
+    gamma: [back to H, L]
+  back to H:
+    sigma: [L]             # σ/σ,L self-loop (resolved)
+    'H': [to front of dub, L]
+  to front of dub:
+    ['01', '#1', '11', '00']: [L]
+    gamma: [{gamma: [done, R]}, L]
+  done:
+
+# `to* H` is a separate subroutine — see its own file (to_star_H.yml)

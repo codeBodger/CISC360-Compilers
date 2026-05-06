@@ -1,0 +1,35 @@
+formalism: nesting minimising
+start state: q'
+# write γ' (11 states = 8 + 4 - 1). Source: UTM.pdf p.3 top.
+# Uses `to dub start from R` as a subroutine. Writes the new γ' tape
+# symbol onto the tape at the H-marked position. Uses α-relabeling.
+#
+# resolved: this diagram is very dense. My reading of the interior transit
+# labels is best-effort; please review carefully.
+# SRA: dense, my ass
+table:
+  q':
+    '10': [R]
+    '00': [R]
+    '#0': [R]
+    '11': ["γ'", R]
+    '#1': ["γ'", R]
+  "γ'":
+    '00': [R]
+    '01': [del, R]
+    'H0': [seen H, '00', R]
+    'H1': [done, R]    # resolved: H1 transit uncertain (correct)
+  del:
+    alpha_beta: ["seen alpha to alpha' 1", L]
+    ' ': [["to dub start from R", q'], L]   # resolved: del exit uncertain
+  move:
+    alpha_beta: [del, R]  # resolved: uncertain
+  seen H:
+    alpha_beta: ["seen alpha to alpha' 2", Hβ, R]
+  "seen alpha to alpha' 1":
+    alpha_beta: [move, alpha'_beta, R]
+  "seen alpha to alpha' 2":
+    alpha_beta: ["alpha'_beta", R]
+    # ⊔/⊔,L — then enter to dub start from R, then done
+    ' ': [["to dub start from R", q'], L]
+  done:

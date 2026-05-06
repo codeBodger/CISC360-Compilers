@@ -1,0 +1,39 @@
+formalism: nesting minimising
+start state: Q_phase
+# check accept (39 states = 11 + 7·4). Source: UTM.pdf p.2 bot.
+# Skips past 4 encoded sections (4 copies of shift dub R) to reach the
+# accept-state encoding, then checks if current state matches accept.
+table:
+  Q_phase:
+    - "shift dub R":
+        ['[', '0']: [Q, R]
+        '1': [{gamma: [Gamma_phase, L]}, R]
+  Q:
+    gamma: [Q_phase, L]
+  Gamma_phase:
+    - "shift dub R":
+        '0': [Gamma, R]
+        '1': [{gamma: [Sigma_phase, L]}, R]
+  Gamma:
+    gamma: [Gamma_phase, L]
+  Sigma_phase:
+    - "shift dub R":
+        '0': [Sigma, R]
+        '1': [{gamma: [s_phase, L]}, R]
+  Sigma:
+    gamma: [Sigma_phase, L]
+  s_phase:
+    - "shift dub R":
+        '0': [s, R]
+        '1': [do check, R]
+  s:
+    gamma: [s_phase, L]
+  do check:
+    '00': [R]                      # 00/00,R self-loop
+    '11': [accept, R]              # 11/11,R → accept!
+    '10': [to front of dub, L]
+    '01': [to front of dub, L]
+  to front of dub:
+    '00': [L]
+    '1': [{gamma: [done, L]}, R]
+  done:

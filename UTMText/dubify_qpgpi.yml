@@ -1,0 +1,21 @@
+formalism: nesting minimising
+start state: q'
+# dubify q'γ'i (6 states). Source: UTM.pdf p.6 mid.
+# Converts singles into their dub form: 0 → 00, 1 → 11.
+# Three sections: q' section (handles the q-state encoding), then γ'
+# section (handles γ-encoding), then i section.
+table:
+  q':
+    '0': ['00', R]          # dubify 0 into 00
+    '1': ["γ'", '11', R]    # dubify 1 into 11, advance to γ' section
+  "γ'":
+    '0': ['00', R]
+    '1': [i, '11', R]
+  i:
+    '0': [to front of dub, '00', L]
+    '1': [to front of dub, '11', L]
+  to front of dub:
+    '00': [L]
+    '11': [L]
+    ['1','0']: [{gamma: [done, L]}, R]
+  done:
