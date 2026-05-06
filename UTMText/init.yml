@@ -1,4 +1,4 @@
-formalism: original
+formalism: nesting minimising
 start state: Q
 table:
   Q:
@@ -15,14 +15,16 @@ table:
     '1': ['to front of dub', '11', L]
   'to front of dub':
     '00': [L]
-    '1':
-      - 'move to #'
-      - R
-      - epsilon:
-          '0': ['00', R]
-          '1':
-            - 'shift right'
-            - H
-            - R
-            - epsilon: ['to dub start from R', {epsilon: done}]
+    '1': [finishing, R]
+  finishing:
+    - 'move to hash'
+    - '0': ['00', R]
+      '1': [clean up, H, R]
+  clean up:
+    - 'shift right'
+    - 'to dub start from R'
+    - done
   done:
+
+# WEPS: all clear!
+# SRA: switched over to nesting minimising
