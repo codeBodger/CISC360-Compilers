@@ -1,5 +1,5 @@
 formalism: nesting minimising
-start state: find trans
+start state: stage_r
 # find trans (75 states = 19 + 7·8). Source: UTM.pdf p.6 mid.
 # Finds the transition rule applicable to the current (state, symbol)
 # pair in the encoded transition table. Uses 8 copies of `shift dub R`
@@ -16,52 +16,75 @@ start state: find trans
 #       do check → to front of dub → (branch to q'/γ section) →
 #       q' → shift dub R → γ → shift dub R → shift dub R → done
 table:
-  find trans:
+  stage_r:
     # Phase 1: walk 3 shift dub R sections to position at transition table
     - "shift dub R":
-        '1': [pos2, R]         # 1/1,R — advance
-  pos2:
-    gamma: [stage2, L]
-  stage2:
+        '1': [{gamma: [stage_left, L]}, R]         # 1/1,R — advance
+        '0': [r, R]
+  r:
+    gamma: [stage_r, L]
+  stage_left:
     - "shift dub R":
-        '1': [pos3, R]
-  pos3:
-    gamma: [stage3, L]
-  stage3:
+        '1': [{gamma: [stage_blank, L]}, R]
+        '0'; [left, R]
+  left:
+    gamma: [stage_left, L]
+  stage_blank:
     - "shift dub R":
         '1': [do check, R]
+        '0': [blank, R]
+  blank:
+    gamma: [stage_blank, L]
   # Phase 2: do check — compare current (state, symbol) to rule's
   do check:
     '11': [R]                  # 11/11,R self-loop
     '00': [R]                  # 00/00,R
-    '1': [to front of dub, L]  # 1/1,L — match, now reposition
-    '10': [alt branch, L]      # 10/10,L (flag: branches to q' side)
-    '01': [alt branch, L]
-    '0': [alt branch, L]
-  to front of dub:
+    '1': [to front of dub end, L]  # 1/1,L — match, now reposition
+    '10': [to front of dub cont, L]      # 10/10,L (flag: branches to q' side)
+    '01': [to front of dub cont, L]
+    '0': [to front of dub cont, L]
+    ['#1', '#0']: [reject, R]
+  to front of dub end:
     '11': [L]
     '00': [L]
-    '1': [pre_done, R]         # 1/1,R bounce
-  pre_done:
-    gamma: [done, L]
+    '1': [{gamma: [done, L]}, R]         # 1/1,R bounce
   # Phase 3: alternate branch — mismatch, skip ahead via q'/γ section
-  alt branch:
-    # flag: this branches into the q'-side diagram with multiple
+  to front of dub cont:
+    ['11', '00']: [L]
+    '1': [{gamma: [stage_q, L]}, R]
+    # resolved: this branches into the q'-side diagram with multiple
     # shift dub R calls; I couldn't confidently read the exit points.
+    # SAMHAIN: again with the RTL...
+  stage_q:
     - "shift dub R":
-        '1': [q' section, R]
-  q' section:
-    gamma: [gamma section, L]
+        '1': [{gamma: [stage_gamma, L]}, R]
+        '0': [q, R]
+  q:
+    gamma: [stage_q, R]
+  stage_gamma:
+    - "shift dub R":
+        '1': [{gamma: ["stage_q'", L]}, R]
+        '0': [gamma, R]
+  gamma:
+    gamma: [stage_gamma, L]
+  "stage_q'":
+    - "shift dub R":
+        '1': [{gamma: ["stage_gamma'", L]}, R]
+        '0': ["q'", R]
+  "q'":
+    gamma: ["stage_q'", L]
     # flag
-  gamma section:
+  "stage_gamma'":
     - "shift dub R":
-        '1': [gamma_advance, R]
-  gamma_advance:
-    - "shift dub R":
-        '1': [loop back, R]
+        '1': [{gamma: [loop back, L]}, R]
+        '0': ["gamma'", R]
+  "gamma'":
+    gamma: ["stage_gamma'", L]
   loop back:
-    # flag: per diagram, this loops back to `do check` for the next rule
-    gamma: [do check, L]
+    # resolved: per diagram, this loops back to `do check` for the next rule
+    - "shift dub R":
+        ['1','0']: [do check, R]
   done:
 
 # WEPS edits here: changed UTF gammas to 'gamma'
+# SRA: fixed the whole thing, hopefully...
