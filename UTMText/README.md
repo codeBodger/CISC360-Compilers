@@ -179,8 +179,8 @@ Checked if fully verified
 - [x] do_i_del_1i.yml
 - [ ] dubify_qpgpi.yml
 - [x] find_and_write_blank.yml
-- [ ] find_trans.yml
-- [ ] init.yml
+- [x] find_trans.yml
+- [x] init.yml
 - [x] main.yml
 - [x] move_to_hash.yml
 - [x] proc.yml
