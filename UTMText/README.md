@@ -192,7 +192,7 @@ Checked if fully verified
 - [x] to_dub_start_from_R.yml
 - [x] to_left.yml
 - [x] to_star_H.yml
-- [ ] verify_gamma_before_H.yml
+- [x] verify_gamma_before_H.yml
 - [ ] verify_gp_before_H.yml
 - [x] verify_hash1.yml
 - [ ] write_gp.yml
