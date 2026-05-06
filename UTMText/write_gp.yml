@@ -4,8 +4,9 @@ start state: q'
 # Uses `to dub start from R` as a subroutine. Writes the new γ' tape
 # symbol onto the tape at the H-marked position. Uses α-relabeling.
 #
-# flag: this diagram is very dense. My reading of the interior transit
+# resolved: this diagram is very dense. My reading of the interior transit
 # labels is best-effort; please review carefully.
+# SRA: dense, my ass
 table:
   q':
     '10': [R]
@@ -17,16 +18,18 @@ table:
     '00': [R]
     '01': [del, R]
     'H0': [seen H, '00', R]
-    'H1': [done, R]    # flag: H1 transit uncertain
+    'H1': [done, R]    # resolved: H1 transit uncertain (correct)
   del:
-    alpha_beta: [R]
-    gamma: [move, L]   # flag: del exit uncertain
+    alpha_beta: ["seen alpha to alpha' 1", L]
+    ' ': [["to dub start from R", q'], L]   # resolved: del exit uncertain
   move:
-    gamma: ["seen alpha to alpha'", R]  # flag: uncertain
+    alpha_beta: [del, R]  # resolved: uncertain
   seen H:
-    alpha_beta: ["seen alpha to alpha'", Hβ, R]
-  "seen alpha to alpha'":
-    alpha_beta: ["alpha'β", R]
+    alpha_beta: ["seen alpha to alpha' 2", Hβ, R]
+  "seen alpha to alpha' 1":
+    alpha_beta: [move, alpha'_beta, R]
+  "seen alpha to alpha' 2":
+    alpha_beta: ["alpha'_beta", R]
     # ⊔/⊔,L — then enter to dub start from R, then done
-    ' ': [["to dub start from R", done], L]
+    ' ': [["to dub start from R", q'], L]
   done:

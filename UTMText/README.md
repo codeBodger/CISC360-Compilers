@@ -195,4 +195,4 @@ Checked if fully verified
 - [x] verify_gamma_before_H.yml
 - [x] verify_gp_before_H.yml
 - [x] verify_hash1.yml
-- [ ] write_gp.yml
+- [x] write_gp.yml
