@@ -51,9 +51,9 @@ table:
     - "shift dub R":
         '1': [q' section, R]
   q' section:
-    gamma: [γ section, L]
+    gamma: [gamma section, L]
     # flag
-  γ section:
+  gamma section:
     - "shift dub R":
         '1': [gamma_advance, R]
   gamma_advance:
@@ -63,3 +63,5 @@ table:
     # flag: per diagram, this loops back to `do check` for the next rule
     gamma: [do check, L]
   done:
+
+# WEPS edits here: changed UTF gammas to 'gamma'
