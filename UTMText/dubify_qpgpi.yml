@@ -17,7 +17,5 @@ table:
   to front of dub:
     '00': [L]
     '11': [L]
-    gamma: [pre_done, R]
-  pre_done:
-    gamma: [done, L]
+    ['1','0']: [{gamma: [done, L]}, R]
   done:

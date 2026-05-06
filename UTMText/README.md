@@ -177,7 +177,7 @@ Checked if fully verified
 - [x] check_reject.yml
 - [x] delete_dub.yml
 - [x] do_i_del_1i.yml
-- [ ] dubify_qpgpi.yml
+- [x] dubify_qpgpi.yml
 - [x] find_and_write_blank.yml
 - [x] find_trans.yml
 - [x] init.yml
