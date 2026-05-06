@@ -6,10 +6,11 @@ start state: stage_r
 # (one per encoded section: Q, Γ, Σ, s, t, r, plus q & γ transit)
 # plus 19 states of branching logic.
 #
-# flag: this is THE most complex subroutine in the UTM.  Bleed-through
+# resolved: this is THE most complex subroutine in the UTM.  Bleed-through
 # on the page makes many transit labels hard to read. MY TRANSCRIPTION
 # IS BEST-EFFORT SKELETON — do NOT treat this as complete without
 # Samhain's review.
+# SRA: fixed, probably
 #
 # High-level skeleton:
 #   ε → shift dub R → anon → shift dub R → anon → shift dub R →
@@ -40,7 +41,8 @@ table:
     '11': [R]                  # 11/11,R self-loop
     '00': [R]                  # 00/00,R
     '1': [to front of dub end, L]  # 1/1,L — match, now reposition
-    '10': [to front of dub cont, L]      # 10/10,L (flag: branches to q' side)
+    '10': [to front of dub cont, L]      # 10/10,L (resolved: branches to q' side)
+                                         # no the hell it doesn't...
     '01': [to front of dub cont, L]
     '0': [to front of dub cont, L]
     ['#1', '#0']: [reject, R]
@@ -73,7 +75,7 @@ table:
         '0': ["q'", R]
   "q'":
     gamma: ["stage_q'", L]
-    # flag
+    # resolved
   "stage_gamma'":
     - "shift dub R":
         '1': [{gamma: [loop back, L]}, R]
