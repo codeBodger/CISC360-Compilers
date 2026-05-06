@@ -173,7 +173,7 @@ with Sunday evening.
 
 Checked if fully verified
 
-- [ ] check_accept.yml
+- [x] check_accept.yml
 - [x] check_reject.yml
 - [x] delete_dub.yml
 - [x] do_i_del_1i.yml
