@@ -27,7 +27,7 @@ table:
   stage_left:
     - "shift dub R":
         '1': [{gamma: [stage_blank, L]}, R]
-        '0'; [left, R]
+        '0': [left, R]
   left:
     gamma: [stage_left, L]
   stage_blank:
