@@ -167,3 +167,32 @@ like `[`, `-`, or `?`.
 
 If you have any other ideas, we can totally discuss, this is just what I came up
 with Sunday evening.
+
+
+# Routine statuus
+
+Checked if completed
+
+- [ ] check_accept.yml
+- [ ] check_reject.yml
+- [ ] delete_dub.yml
+- [ ] do_i_del_1i.yml
+- [ ] dubify_qpgpi.yml
+- [ ] find_and_write_blank.yml
+- [ ] find_trans.yml
+- [ ] init.yml
+- [ ] main.yml
+- [ ] move_to_hash.yml
+- [ ] proc.yml
+- [ ] read_gamma.yml
+- [ ] shift_dub_L.yml
+- [ ] shift_dub_R.yml
+- [ ] shift_right.yml
+- [ ] to_H.yml
+- [ ] to_dub_start_from_R.yml
+- [ ] to_left.yml
+- [ ] to_star_H.yml
+- [ ] verify_gamma_before_H.yml
+- [ ] verify_gp_before_H.yml
+- [ ] verify_hash1.yml
+- [ ] write_gp.yml
