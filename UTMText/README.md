@@ -307,26 +307,29 @@ with Sunday evening.
 
 Checked if completed
 
-- [ ] check_accept.yml
-- [ ] check_reject.yml
-- [ ] delete_dub.yml
-- [ ] do_i_del_1i.yml
-- [ ] dubify_qpgpi.yml
-- [ ] find_and_write_blank.yml
-- [ ] find_trans.yml
-- [x] init.yml
-- [x] main.yml
-- [ ] move_to_hash.yml
-- [x] proc.yml
-- [ ] read_gamma.yml
-- [ ] shift_dub_L.yml
-- [ ] shift_dub_R.yml
-- [ ] shift_right.yml
-- [ ] to_H.yml
-- [ ] to_dub_start_from_R.yml
-- [ ] to_left.yml
-- [ ] to_star_H.yml
-- [ ] verify_gamma_before_H.yml
-- [ ] verify_gp_before_H.yml
-- [ ] verify_hash1.yml
-- [ ] write_gp.yml
+- [x] main.tm
+    - [x] main
+    - [x] init
+    - [x] proc
+- [ ] to_location.tm
+    - [x] to_left
+    - [x] to_H
+    - [x] verify_g'_placed_before_H
+    - [ ] to_star_H
+    - [ ] verify_g'_placed_before_star_H
+    - [ ] to_dub_start_from_R
+- [ ] unclassified
+    - [ ] check_accept
+    - [ ] check_reject
+    - [ ] delete_dub
+    - [ ] do_i_del_1i
+    - [ ] dubify_qpgpi
+    - [ ] find_and_write_blank
+    - [ ] find_trans
+    - [ ] move_to_hash
+    - [ ] read_gamma
+    - [ ] shift_dub_L
+    - [ ] shift_dub_R
+    - [ ] shift_right
+    - [ ] verify_hash1
+    - [ ] write_gp
