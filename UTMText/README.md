@@ -96,7 +96,6 @@ A pre-emptive description of notation:
     - Always the most recently declared instance of that `name` (if present;
         otherwise, the next declaration) is used when referenced in a
         `transition`, unless specified (see below)
-    - To call a subroutine, follow its name with `()`, before the colon
 - Transitions are of the form `<read>/<write>,<direction> <destination>`, where
     - `read` is the comma separated set of symbols to be read (each elements of
         `Gamma`) OR:
@@ -116,13 +115,15 @@ A pre-emptive description of notation:
         tape
         - If `left` is in `read`, only `R` is valid here
     - `destination` is the name of a destination state
-        - The destination state must be within the same routine (or else be one
-            of `accept` or `reject`)
+        - The destination state must be within the same routine, be one of
+            `accept` or `reject`, or be a subroutine call
+            - To call a subroutine, reference its name followed by
+                `(<transition>; ... ; <transition>)`
         - The destination state may alternatively be or be prefixed with any of:
-            - `.`: the source state (or, as a prefix, a state on this line with
-                the given name)
-            - `^`: the first state on the previous line (or the first state on
-                the previous line with the given name)
+            - `.`: the source state (or, as a prefix, a state declared on this
+                line with the given name)
+            - `^`: the first state on the previous line (or the first state
+                declared on the previous line with the given name)
             - `$`: the first state on this line (or the first state on any line,
                 given that it has this name, looking above before below)
             - `|`: the first state on the next line (or the first state on the
@@ -131,6 +132,12 @@ A pre-emptive description of notation:
                 backwards from the source state, with the given name)
             - `+`: the next state on this line (or the first state, looking
                 forwards from the source state, with the given name)
+            - Calling a subroutine, as described above, allows it to be
+                referenced in these ways, in which case, nothing should be
+                within the parentheses.
+        - Appending `&(a->a'|b->b')` indicates that the referenced state must
+            store the given value and call it the primed value, so it can be
+            used in its outgoing transitions.
 - Transitions out of subroutine calls are of the form
     `[<label>] (<read>/<write>,<direction>|e) <destination>`, where
     - Previously described elements are as then described
@@ -140,6 +147,10 @@ A pre-emptive description of notation:
     - `e` is a literal `e`, indicating that an epsilon transition is to be taken
         - Either all transitions out of a given routine from a given return
             state must be epsilon transitions, or none of them must be.
+    - Subroutine calls can also be made separately from a transition, allowing
+        them to be referenced in much the same way as if they were previously
+        declared *within* a transition.
+        - In this case, no colon should follow the parentheses, however.
 - As evident partially in the descriptions of the state machine, states, and
     transitions, multiple states can be placed on one line.  The grammar does
     not require, however, any delimiter between states.  Additionally, to avoid
@@ -165,7 +176,18 @@ reject: reject
 ```
 include: main.tmh
 
-
+:main: S
+S: [/[,R |
+a_state: 0,1/0,R .; g/g,R |
+another_state: 0/0,R + : g/g,L |
+state_4: ab/ab,L |&a->a'
+seen: ab/a'b,R |
+move: 0/0,L a_subroutine(e |)
+state_7: 0/0,L another_subroutine(no e +subroutine_4(); yes e |()) \
+    1/1,L subroutine_3(s/s,L +(); [/[,R |()) subroutine_4(e +()) \
+    subroutine_5(e +()) subroutine_6(e +()) subroutine_7(e -subroutine_4())
+subroutine_4(e +()) subroutine_5(e +()) subroutine_6(e +()) \
+    subroutine_7(s/s,L state_7; [/[,R reject; g/g,L ^subroutine_4())
 ```
 
 ## Old abandoned YAML notations
