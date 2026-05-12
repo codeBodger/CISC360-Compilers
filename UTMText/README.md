@@ -308,31 +308,32 @@ with Sunday evening.
 Checked if completed
 
 - [x] check.tm
-    - [x] check_accept
-    - [x] check_reject
+    - [x] `check_accept` (pg 2, bottom)
+    - [x] `check_reject` (pg 6, top)
 - [ ] dub_operations.tm
-    - [ ] to_dub_start_from_R
-    - [ ] delete_dub
-    - [ ] dubify_q'1g'1i
+    - [ ] `to_dub_start_from_R` (pg 4, top)
+    - [ ] `delete_dub` (pg 6, middle left low)
+    - [ ] `dubify_q'1g'1i` (pg 6, middle right low)
 - [x] main.tm
-    - [x] main
-    - [x] init
-    - [x] proc
+    - [x] `main` (pg 1, top)
+    - [x] `init` (pg 1, bottom)
+    - [x] `proc` (pg 2, top)
 - [ ] shift.tm
-    - [ ] shift_dub_L
-    - [ ] shift_dub_R
+    - [ ] `shift_right` (pg 2, middle right)
+    - [ ] `shift_dub_L` (pg 5, middle high)
+    - [ ] `shift_dub_R` (pg 5, middle low)
 - [ ] to_location.tm
-    - [x] to_left
-    - [x] to_H
-    - [x] verify_g'_placed_before_H
-    - [x] to_star_H
-    - [ ] verify_g'_placed_before_star_H
-    - [ ] move_to_hash
-    - [ ] verify_hash1
-- [ ] unclassified
-    - [ ] do_i_del_1i
-    - [ ] find_and_write_blank
-    - [ ] find_trans
-    - [ ] read_gamma
-    - [ ] shift_right
-    - [ ] write_gp
+    - [x] `to_left` (pg 2, middle left)
+    - [x] `to_H` (pg 6, bottom left)
+    - [x] `verify_g'_placed_before_H` (pg 6, bottom right)
+    - [x] `to_star_H` (complicated)
+    - [ ] `verify_g'_placed_before_star_H` (pg 3, bottom)
+    - [ ] `move_to_hash` (pg 5, bottom lefts)
+    - [ ] `verify_hash1` (pg 5, bottom right)
+- [ ] cycle_end.tm
+    - [ ] `write_g'` (pg 3, top)
+    - [ ] `do_i_del_1i` (pg 3, middle high)
+    - [ ] `find_and_write_blank` (pg 4, bottom)
+    - [ ] `read_g` (pg 3, middle low)
+- [ ] find_trans.tm
+    - [ ] `find_trans` (pg 6, middle high)
