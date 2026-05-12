@@ -310,10 +310,10 @@ Checked if completed
 - [x] check.tm
     - [x] `check_accept` (pg 2, bottom)
     - [x] `check_reject` (pg 6, top)
-- [ ] dub_operations.tm
-    - [ ] `to_dub_start_from_R` (pg 4, top)
-    - [ ] `delete_dub` (pg 6, middle left low)
-    - [ ] `dubify_q'1g'1i` (pg 6, middle right low)
+- [x] dub_operations.tm
+    - [x] `to_dub_start_from_R` (pg 4, top)
+    - [x] `delete_dub` (pg 6, middle left low)
+    - [x] `dubify_q'1g'1i` (pg 6, middle right low)
 - [x] main.tm
     - [x] `main` (pg 1, top)
     - [x] `init` (pg 1, bottom)
