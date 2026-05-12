@@ -307,9 +307,9 @@ with Sunday evening.
 
 Checked if completed
 
-- [ ] check.tm
-    - [ ] check_accept
-    - [ ] check_reject
+- [x] check.tm
+    - [x] check_accept
+    - [x] check_reject
 - [ ] dub_operations.tm
     - [ ] to_dub_start_from_R
     - [ ] delete_dub
