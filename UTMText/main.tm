@@ -1,9 +1,11 @@
 include: utm.tmh
 
+// pg 1, top
 :main: |
 init(e |)
 proc()
 
+// pg 1, bottom
 :init: |
 Q: 0,[/g,R .; 1/1,R |
 G: 0/0,R .; 1/1,R |
@@ -14,6 +16,7 @@ move_to_hash(e +) : 0/00,R .; 1/H,R |()
 shift_right(e to_dub_start_from_R(e |))
 done:
 
+// pg 2, top
 :proc: |()
 to_left(e +()) check_accept(e +()) check_reject(e +()) find_trans(e +()) \
         delete_dub(e +()) dubify_q'1g'1i(e +()) to_H(e +()) write_g'(e +()) \

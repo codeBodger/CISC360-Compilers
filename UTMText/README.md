@@ -157,6 +157,11 @@ A pre-emptive description of notation:
     excessively long lines, `\` can escape the newline character, as is common.
 - Unless otherwise specified in compilation, `main` is taken to be the entry
     point.
+- Comments:
+    - full lines prefixed with `//`
+    - if a comment line ends with `\`, the comment does not continue
+    - if the line before a comment ends with `\`, the comment is ignored, and
+        the line after the comment appened, not the comment itself.
 
 ## An Example
 
