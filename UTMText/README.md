@@ -61,7 +61,114 @@ you have any questions.
   likely expect.
 
 
-# YAML/text notation
+# text notation
+
+Every file must have a header defining:
+- `Gamma:` (a comma separated set of tape symbols)
+- `Sigma:` (a comma separated set of input symbols; a subset of `Gamma`)
+- `blank:` (a string in `Gamma` \ `Sigma`)
+- `left:` (a string in `Gamma` \ `Sigma`)
+- `a_set:` (a comma separated set of strings or initial substrings in `Gamma`,
+    not including `left`)
+- `b_set:` (a comma separated set of strings or final substrings in `Gamma`, not
+    including `left`)
+- `accept:` (the name of the global accept state)
+- `reject:` (the name of the global reject state)
+
+Note: a special `include:` (filename) clause can be used in a header, which acts
+much like `#include` in C and C++.  This can be used for anything, but should be
+reserved for including parts of the header, so as not to have to repeat oneself
+in every file.
+
+A pre-emptive description of notation:
+- Following the header is the description of the state machine.
+- The state machine is made up of a structure of states and routines, separated
+    merely by newlines and spaces.
+- Routines are declared on their own lines surounded by colons, followed by the
+    name of their start state (i.e. `:<name>: <start state>`), with their part
+    of the state machine following on subsequent lines.
+    - Routines' return states are identifiable by having no outgoing transitions
+    - Any routine can reference the global `accept` and `reject` states with
+        their file-local names, as defined in the header
+- States are of the form `[<name>]: <transition>; ... ; <transition>`
+    - The `name` is optional
+    - The `name` need not be unique
+    - Always the most recently declared instance of that `name` (if present;
+        otherwise, the next declaration) is used when referenced in a
+        `transition`, unless specified (see below)
+    - To call a subroutine, follow its name with `()`, before the colon
+- Transitions are of the form `<read>/<write>,<direction> <destination>`, where
+    - `read` is the comma separated set of symbols to be read (each elements of
+        `Gamma`) OR:
+        - `g`, indicating that *any* tape symbol should be matched (or, more
+            specifically, amy tape symbol without a transition elsewhere
+            specified out of the state in question)
+        - `s`, indicating that any (not elsewhere matched) element of `Sigma`
+            should be matched
+        - some combination of tape symbols concatenated with `a`, `b`, `a'`,
+            `b'`, and `s`, such that the concatenation would yeild elements of
+            `Gamma` when the placeholders are replaced with the things they can
+            be (see the header), and `'` is only used in the context of a
+            renaming state
+    - `write` is as `read`, just only one element, not a set
+        - If `left` is in `read`, only `left` is valid here
+    - `direction` is either `R` or `L`, indicating the direction to move the
+        tape
+        - If `left` is in `read`, only `R` is valid here
+    - `destination` is the name of a destination state
+        - The destination state must be within the same routine (or else be one
+            of `accept` or `reject`)
+        - The destination state may alternatively be or be prefixed with any of:
+            - `.`: the source state (or, as a prefix, a state on this line with
+                the given name)
+            - `^`: the first state on the previous line (or the first state on
+                the previous line with the given name)
+            - `$`: the first state on this line (or the first state on any line,
+                given that it has this name, looking above before below)
+            - `|`: the first state on the next line (or the first state on the
+                next line with the given name)
+            - `-`: the previous state on this line (or the first state, looking
+                backwards from the source state, with the given name)
+            - `+`: the next state on this line (or the first state, looking
+                forwards from the source state, with the given name)
+- Transitions out of subroutine calls are of the form
+    `[<label>] (<read>/<write>,<direction>|e) <destination>`, where
+    - Previously described elements are as then described
+    - `label` is the name of the return state of the subroutine from which to
+        follow the transition
+        - `label` is required if the subroutine has multiple return states
+    - `e` is a literal `e`, indicating that an epsilon transition is to be taken
+        - Either all transitions out of a given routine from a given return
+            state must be epsilon transitions, or none of them must be.
+- As evident partially in the descriptions of the state machine, states, and
+    transitions, multiple states can be placed on one line.  The grammar does
+    not require, however, any delimiter between states.  Additionally, to avoid
+    excessively long lines, `\` can escape the newline character, as is common.
+- Unless otherwise specified in compilation, `main` is taken to be the entry
+    point.
+
+## An Example
+
+`main.tmh`
+```
+Gamma: [, _, 0, 1, 00, 01, 10, 11, #, #0, #1
+Sigma: 0, 1, #
+blank: _
+left: [
+a_set: 0, 1
+b_set: 0, 1
+accept: accept
+reject: reject
+```
+
+`main.tm`
+```
+include: main.tmh
+
+
+```
+
+## Old abandoned YAML notations
 
 As an example:
 ```yaml
