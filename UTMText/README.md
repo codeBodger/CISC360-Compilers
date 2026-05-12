@@ -307,29 +307,32 @@ with Sunday evening.
 
 Checked if completed
 
+- [ ] check.tm
+    - [ ] check_accept
+    - [ ] check_reject
+- [ ] dub_operations.tm
+    - [ ] to_dub_start_from_R
+    - [ ] delete_dub
+    - [ ] dubify_q'1g'1i
 - [x] main.tm
     - [x] main
     - [x] init
     - [x] proc
+- [ ] shift.tm
+    - [ ] shift_dub_L
+    - [ ] shift_dub_R
 - [ ] to_location.tm
     - [x] to_left
     - [x] to_H
     - [x] verify_g'_placed_before_H
     - [ ] to_star_H
     - [ ] verify_g'_placed_before_star_H
-    - [ ] to_dub_start_from_R
+    - [ ] move_to_hash
+    - [ ] verify_hash1
 - [ ] unclassified
-    - [ ] check_accept
-    - [ ] check_reject
-    - [ ] delete_dub
     - [ ] do_i_del_1i
-    - [ ] dubify_qpgpi
     - [ ] find_and_write_blank
     - [ ] find_trans
-    - [ ] move_to_hash
     - [ ] read_gamma
-    - [ ] shift_dub_L
-    - [ ] shift_dub_R
     - [ ] shift_right
-    - [ ] verify_hash1
     - [ ] write_gp
