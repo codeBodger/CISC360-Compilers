@@ -325,7 +325,7 @@ Checked if completed
     - [x] to_left
     - [x] to_H
     - [x] verify_g'_placed_before_H
-    - [ ] to_star_H
+    - [x] to_star_H
     - [ ] verify_g'_placed_before_star_H
     - [ ] move_to_hash
     - [ ] verify_hash1

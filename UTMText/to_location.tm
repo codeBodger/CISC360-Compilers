@@ -27,3 +27,10 @@ to_front_of_dub: g/g,R + \
         : g/g,L |
 yes:
 no:
+
+// mentioned bottom of pg 3, but really almost identical to `to_H` at
+// pg 6, bottom left
+:to_star_H: |()
+shift_dub_R(s/s,R |())
+verify_g'_placed_before_star_H(yes e |; no e ^)
+done:
