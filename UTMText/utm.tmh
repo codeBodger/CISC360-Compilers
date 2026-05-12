@@ -1,0 +1,8 @@
+Gamma: 1, 0, #, 00, 01, 10, 11, [, _, #0, #1, _1, _0, H, H1, H0
+Sigma: 1, 0, #
+blank: _
+left: [
+a_set: 0, 1
+b_set: 0, 1
+accept: accept
+reject: reject

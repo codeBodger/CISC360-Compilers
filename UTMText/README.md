@@ -309,10 +309,10 @@ Checked if completed
 - [ ] dubify_qpgpi.yml
 - [ ] find_and_write_blank.yml
 - [ ] find_trans.yml
-- [ ] init.yml
-- [ ] main.yml
+- [x] init.yml
+- [x] main.yml
 - [ ] move_to_hash.yml
-- [ ] proc.yml
+- [x] proc.yml
 - [ ] read_gamma.yml
 - [ ] shift_dub_L.yml
 - [ ] shift_dub_R.yml
